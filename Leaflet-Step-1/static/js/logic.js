@@ -10,7 +10,6 @@ function getcolor(pmag){
    5+  red
 */
 
-console.log(pmag);
 var l_color = "";
 
 
@@ -45,7 +44,7 @@ catch(err) {
        console.log(err);
 }    
       
-  console.log("l_color "+l_color);
+
   return(l_color);
 
 }
@@ -54,6 +53,49 @@ catch(err) {
  *
  */
 
+// Update the legend's innerHTML with the last updated time and station count
+function updateLegend() {
+  document.querySelector(".legend").innerHTML = [
+    "<p>Updated: </p>"
+  ].join("");
+}
+
+
+function createLegend(){
+  
+  try{
+
+    var legend = L.control({position: 'bottomleft'});
+    legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend');
+    labels = ['<strong>Categories</strong>'],
+    categories = ['0-1','1-2','2-3','3-4','4-5','5+'];
+
+    for (var i = 0; i < categories.length; i++) {
+
+            div.innerHTML += 
+            labels.push(
+                '<i class="circle" style="background:' + getcolor(i) + '"></i> ' +
+            (categories[i] ? categories[i] : '+'));
+
+        }
+        div.innerHTML = labels.join('<br>');
+    return div;
+    };
+    legend.addTo(map);
+
+
+   }
+   catch(err) {
+    console.log(err);
+    }     
+}
+
+
+/*
+ *
+ */
 function createQuakeMap(quakes) {
 
 console.log("Create Map")
@@ -104,6 +146,41 @@ var baseMaps = {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(map);
+
+
+   // Set Up Legend
+
+   try{
+
+    var legend = L.control({position: 'bottomleft'});
+    legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend');
+    labels = ['<strong>Categories</strong>'],
+    categories = ['0-1','1-2','2-3','3-4','4-5','5+'];
+
+    for (var i = 0; i < categories.length; i++) {
+
+            div.innerHTML += 
+            labels.push(
+                '<i class="circle" style="background:' + getcolor(i) + '"></i> ' +
+            (categories[i] ? categories[i] : '+'));
+
+        }
+        div.innerHTML = labels.join('<br>');
+    return div;
+    };
+    legend.addTo(map);
+
+
+   }
+   catch(err) {
+    console.log(err);
+    }     
+   // Add Legend to the Map
+   //legend.addTo(myMap);
+
+
 }
 
 
@@ -111,7 +188,7 @@ var baseMaps = {
 
 function createEartMarkers(response) {
 
-  //console.log(response)
+  console.log(response)
   console.log("test");
 
   var quakes = response.features;
@@ -160,11 +237,13 @@ function createEartMarkers(response) {
     var quakeMarker = L.circleMarker([lat, lon],markerOptions)
     .bindPopup(newurl+"<h3>Depth: " + depth + "</h3><h3>Time: "+printdate+"<h3>Status:"+eventstatus+"</h3><h3>Tsunami:"+tsunami+"</h3>");
    
-
-
     quakeMarkers.push(quakeMarker);
 
 
+  
+    // Call the updateLegend function, which will... update the legend!
+    
+    updateLegend;
     
   }  
 
