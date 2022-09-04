@@ -188,8 +188,6 @@ var baseMaps = {
 
 function createEartMarkers(response) {
 
-  console.log(response)
-  console.log("test");
 
   var quakes = response.features;
   var quakeMarkers = [];
@@ -265,5 +263,5 @@ function createEartMarkers(response) {
    console.log("error fetching url", url);
 });
 
-console.log("TEst")
+
 

@@ -213,8 +213,8 @@ var overlayMaps = {
 
         for (var i = 0; i < magnitude.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + getcolor(magnitude[i] + 1) + '"></i> ' +
-                magnitude[i] + (magnitude[i + 1] ? '&ndash;' + magnitude[i + 1] + '<br>' : '+');
+               '<i class="circle" style="background:' + getcolor(i) + '"></i> '  +
+                 (magnitude[i] ?  magnitude[i] + '<br>' : '+');
         }
 
         return div;
